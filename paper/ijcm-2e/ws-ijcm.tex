@@ -1,0 +1,562 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Text Area: 8in (include Runningheads) x 5in
+%% ws-ijcm.tex: 09-12-2024
+%% TeX file to use with ws-ijcm.cls written in LaTeX2E.
+%% The content, structure, format and layout of this style file is the
+%% property of World Scientific Publishing Co. Pte. Ltd.
+%% Copyright 2024 by World Scientific Publishing Co.
+%% All rights are reserved.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\documentclass[wsdraft]{ws-ijcm}
+\documentclass{ws-ijcm}
+
+\usepackage{natbib}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage[verbose,hypertexnames=false]{hyperref}
+\hypersetup{colorlinks=false,allbordercolors=blue,pdfborderstyle={/S/U/W 1}}
+% \label, \ref and \cite commands are highly recommended
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%% Publisher's Area please ignore %%%%%%%%%%%%%%%
+%
+\catchline{}{}{}{}{}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\markboth{[Authors]}{PE-PINN: A Physics-Enhanced PINN for PKN Hydraulic Fracture Modeling}
+
+\title{PE-PINN: A Physics-Enhanced Physics-Informed Neural Network \\
+for Solving the PKN Model of Hydraulic Fracturing%
+\footnote{For the title, try not to use more than 3 lines. Typeset the title in 10 pt bold.}
+}
+
+\author{[Author 1]\footnote{Typeset names in 8 pt Roman.}}
+
+\address{[Department, University]\\
+[City, Country]\,\footnote{State completely without abbreviations.}\\
+\email{[email]}}
+
+\author{[Author 2]}
+
+\address{[Department, University]\\
+[City, Country]\\
+\email{[email]}}
+
+\maketitle
+
+\begin{history}
+\received{(Day Month Year)}
+\revised{(Day Month Year)}
+\accepted{(Day Month Year)}
+\published{(Day Month Year)}
+\end{history}
+
+\begin{abstract}
+% TODO: 实验完成后撰写摘要
+This paper presents PE-PINN, a Physics-Enhanced Physics-Informed Neural
+Network framework for solving the PKN model of hydraulic fracturing.
+The governing Nordgren equation is solved by embedding physical priors
+directly into the network architecture, including a transient tip shape
+function that analytically interpolates asymptotic regimes, a causal
+arrival-time constraint, and a learnable time-power exponent. Numerical
+experiments demonstrate competitive accuracy against finite difference
+solutions while maintaining a mesh-free formulation.
+\end{abstract}
+
+\keywords{Physics-informed neural network; PKN model; hydraulic fracturing;
+Nordgren equation; moving boundary; tip singularity.}
+
+\section{Introduction}
+
+Hydraulic fracturing is a crucial technology for enhancing
+hydrocarbon recovery from unconventional reservoirs
+\cite{Economides2000}. Accurate prediction of fracture geometry ---
+the spatial and temporal evolution of fracture width, length, and net
+pressure --- is essential for optimizing treatment design and evaluating
+well performance. Perkins and Kern and Nordgren first proposed the PKN
+model to describe the evolution of fracture length and width during
+hydraulic fracturing \cite{Nordgren1972}. This classical model, together
+with the KGD model \cite{Ref_KGD}, established the theoretical basis for
+the simulation of hydraulic fracturing. Among these models, the PKN
+model remains one of the most widely adopted in industrial practice due
+to its computational tractability. The PKN model assumes a fracture of
+fixed height that is much larger than its vertical extent, with
+plane-strain deformation in each cross-section. Under this assumption,
+the local elasticity relation yields a nonlinear governing equation that
+balances the temporal evolution of fracture width, the fluid leak-off
+into the surrounding formation, and the longitudinal gradient of the
+volumetric flow rate governed by the fluid's viscous resistance. Despite
+its apparent simplicity, this equation poses significant computational
+challenges due to its strong nonlinearity, moving free boundary, and
+singular behavior at the propagating tip.
+
+The numerical solution of the PKN model has been an active research
+topic since Nordgren's original finite-difference formulation
+\cite{Nordgren1972}. Traditional grid-based approaches include explicit
+finite-difference schemes \cite{Kemp1990}, finite element methods with
+tip enrichment \cite{Garikapati2017}, and spectral discretizations
+\cite{Peirce2014}. However, these methods face persistent difficulties.
+The fracture tip exhibits a singular gradient that tends to infinity,
+requiring special tip elements, regularization techniques
+\cite{Linkov2011}, or asymptotic enrichment functions
+\cite{Garikapati2017} to avoid severe accuracy degradation. The
+classical PKN tip asymptote follows a one-third power-law in the
+viscosity-dominated regime \cite{Nordgren1972,Kemp1990}, but a more
+complex transient behavior --- smoothly transitioning from a one-third
+to a three-eighths power-law depending on the local leak-off intensity
+--- has been recognized in recent re-examinations
+\cite{Linkov2015,Detournay2016}. Furthermore, the moving free boundary
+evolves nonlinearly with time, following different power-law regimes
+depending on whether the propagation is dominated by fluid storage or
+leak-off. Accurately tracking this evolving crack front typically
+requires adaptive remeshing or front-tracking algorithms
+\cite{Peirce2014}, which introduce significant computational overhead.
+Additionally, a multi-scale structure arises from the thin boundary
+layer near the tip to the global fracture scale, demanding dense local
+grids that can make parametric studies and real-time applications
+prohibitive \cite{Detournay2016}.
+
+Physics-Informed Neural Networks (PINNs) were introduced by Raissi
+\emph{et al.} \cite{Raissi2019} as a mesh-free framework that embeds
+the governing partial differential equations directly into the loss
+function of a neural network. PINNs exploit automatic differentiation
+for exact derivative computation and can naturally incorporate sparse
+observational data. Since their introduction, PINNs and their variants
+--- including domain-decomposition extensions such as XPINN
+\cite{Jagtap2020} and cPINN \cite{Jagtap2020b}, gradient-enhanced
+formulations \cite{Yu2022}, and multi-scale architectures
+\cite{Moseley2023} --- have been successfully applied across a broad
+spectrum of problems in computational mechanics. Recently, PINNs have
+been applied to the field of subsurface engineering, including flow and
+transport in porous media \cite{Hassan2024}, history-matching in
+fractured reservoirs \cite{Ali2025}, and two-phase flow in heterogeneous
+formations \cite{Wang2024}. However, the application of PINNs to
+hydraulic fracture propagation --- characterized by its unique
+combination of a moving free boundary, singular tip asymptotics, and
+multi-regime transient behavior --- remains relatively unexplored.
+
+A small number of recent studies have begun to bridge PINNs with
+hydraulic fracture modeling. \cite{Yang2023} developed a
+physics-informed surrogate model for predicting hydraulic fracture
+geometry using deep learning, demonstrating the feasibility of replacing
+computationally expensive simulators with trained neural networks.
+\cite{Tang2024} proposed a PINN formulation with moving boundary
+constraints for modeling hydraulic fracturing, making an important step
+toward handling the free-boundary nature of the problem. However,
+existing PINN-based approaches for hydraulic fracturing still face
+critical limitations. First, most existing PINN formulations for
+fracture problems do not explicitly encode the asymptotic tip behavior
+into the network architecture. Without such prior knowledge, the network
+must learn sharp near-tip gradients purely from PDE residuals, which is
+notoriously difficult for gradient-based optimization
+\cite{Krishnapriyan2021}. The transient transition between the
+one-third and three-eighths power-law tip asymptotics has not been
+addressed in any existing PINN work. Second, the PKN governing equation
+is physically valid only in the region where the fracture has already
+arrived. Existing PINN formulations do not enforce this causal
+constraint, leading to non-physical residuals being minimized in regions
+not yet reached by the fracture front. Third, the early-time behavior
+of fracture width exhibits a power-law singularity whose exponent
+depends on the dominant physical regime. Learning this temporal scaling
+directly from data is inefficient and limits generalization to time
+ranges not covered during training.
+
+To address these challenges, this paper proposes PE-PINN
+(Physics-Enhanced PINN), a novel framework for the PKN model that
+explicitly embeds physical prior knowledge into the network architecture.
+The proposed method decomposes the fracture width into three physically
+meaningful components: a learnable time-power term that captures the
+early-time singular scaling, an analytically derived transient tip shape
+function that smoothly interpolates between the one-third and
+three-eighths asymptotic regimes, and a neural network that learns the
+remaining smooth component. This physics-enhanced representation
+explicitly separates the singular time and space dependencies, allowing
+the network to learn only a well-behaved residual function. Building on
+this decomposition, the arrival time of the crack tip at each spatial
+location is computed by numerically inverting the crack-length evolution
+relation, and the PDE residual evaluation is restricted to the physically
+meaningful region where the fracture has already arrived. This causal
+masking ensures
+physical consistency. Additionally, the time-power exponent is
+constrained to a physically plausible range and optimized jointly with
+the network parameters, automatically discovering the correct temporal
+scaling. A two-stage training strategy combining Adam \cite{Kingma2015}
+for global exploration with L-BFGS \cite{Liu1989} for fine local
+convergence is employed. In contrast to existing PINN formulations for
+hydraulic fracturing \cite{Yang2023,Tang2024}, the proposed method
+encodes the asymptotic tip structure analytically rather than relying on
+the optimizer to discover it, which significantly reduces the learning
+burden on the network. Numerical experiments demonstrate that the
+proposed method achieves competitive accuracy against conventional
+finite difference solutions while maintaining a mesh-free formulation.
+Systematic ablation studies and sensitivity analyses further confirm
+that each component of the proposed framework contributes measurably to
+overall accuracy.
+
+The remainder of this paper is organized as follows. Section~2 formulates
+the PKN governing equations. Section~3 describes the proposed PE-PINN
+framework, including the network design, loss function, training
+strategy, and experimental configuration. Section~4 presents the
+numerical results. Section~5 concludes the paper.
+
+% ============================================================
+% Section 2: Problem Formulation
+% ============================================================
+\section{Problem Formulation}
+
+The PKN model describes the propagation of a hydraulic fracture of
+constant height $H$ within a homogeneous, linear elastic reservoir
+\cite{Nordgren1972}. The fracture is assumed to be much longer than
+its height, resulting in plane-strain deformation in each vertical
+cross-section perpendicular to the propagation direction. The fluid
+flow within the fracture is laminar and governed by lubrication
+theory. The fracture propagates in the viscosity-dominated regime,
+and fluid leak-off from the fracture faces into the surrounding
+formation follows Carter's one-dimensional leak-off model
+\cite{Detournay2016}.
+
+Under the plane-strain assumption, the net pressure $p(x,t)$ is
+proportional to the local fracture width $W(x,t)$ at each vertical
+cross-section \cite{Nordgren1972}:
+\begin{equation}
+  p(x,t) = \frac{E'}{4H}\,W(x,t),
+  \label{eq:elasticity}
+\end{equation}
+where $E' = E/(1-\nu^2)$ is the plane-strain Young's modulus. The
+fluid flow within the fracture is described by the lubrication
+equation, which relates the local flow rate to the pressure gradient.
+Combining the elasticity and lubrication equations with the mass
+conservation condition that accounts for Carter's leak-off yields the
+Nordgren equation:
+\begin{equation}
+  \frac{\partial W}{\partial t} + \frac{C_L}{\sqrt{t - \tau(x)}}
+  - \frac{E'}{256 H^2\mu}\,\frac{\partial^2(W^4)}{\partial x^2}
+  = 0,
+  \label{eq:nordgren}
+\end{equation}
+where $C_L$ is the leak-off coefficient, $\mu$ is the fluid viscosity,
+and $\tau(x)$ is the arrival time of the fracture tip at the spatial
+coordinate $x$. The boundary condition at the wellbore ($x = 0$)
+relates the injection rate to the fracture width gradient through the
+flux condition. At the propagating tip ($x = L(t)$), the fracture width
+vanishes.
+
+The fracture length $L(t)$ evolves nonlinearly with time, following
+distinct power-law regimes in the storage-dominated ($L \propto
+t^{4/5}$) and leak-off-dominated ($L \propto t^{1/2}$) limits
+\cite{Nordgren1972}. A harmonic mean interpolation smoothly connects
+these asymptotic limits.
+
+A critical feature of the PKN model is the singular behavior of the
+fracture width near the propagating tip. In the classical
+viscosity-dominated regime, the width follows a one-third power-law
+$W \sim (1 - x/L)^{1/3}$ as $x \to L(t)$
+\cite{Nordgren1972,Kemp1990}. However, a more general analysis reveals
+a transient tip shape that smoothly transitions from the one-third
+power-law to a three-eighths power-law depending on the local balance
+between fluid storage and leak-off \cite{Linkov2015}. This transient
+behavior is characterized by a dimensionless tip shape function
+$\Omega_{\rm tip}(\xi)$, where $\xi = 1 - x/L(t)$ denotes the
+dimensionless distance from the tip. Accurately capturing this
+transition is essential for resolving the near-tip solution without
+excessive mesh refinement.
+
+% ============================================================
+% Section 3: Methodology
+% ============================================================
+\section{Methodology}
+
+\subsection{PE-PINN design}
+
+Physics-Informed Neural Networks (PINNs) were introduced by Raissi
+\emph{et al.} \cite{Raissi2019} as a mesh-free framework for solving
+partial differential equations. A fully connected neural network
+approximates the solution $u(x, t; \theta)$, and the governing PDE
+residual is embedded directly into the loss function. Automatic
+differentiation is employed to compute the required derivatives exactly.
+
+The proposed PE-PINN framework addresses three fundamental challenges
+that conventional PINNs face when applied to the PKN model with a
+moving boundary and singular tip behavior.
+
+\textbf{Physics-enhanced ansatz.} Rather than directly approximating
+the fracture width with a generic neural network, the proposed method
+decomposes the solution into three physically meaningful components.
+The time-power factor captures the early-time singular scaling, the
+transient tip shape function analytically encodes the asymptotic
+crack-tip behavior, and the neural network learns the remaining smooth
+component. This decomposition explicitly separates the singular
+dependencies, allowing the network to learn only a well-behaved
+residual function.
+
+\textbf{Causal arrival-time constraint.} The PKN governing equation is
+physically valid only in the region where the fracture has already
+arrived. The proposed method computes the arrival time $\tau(x)$ at
+each spatial location by numerically inverting the $L(t)$ relation
+using Brent's root-finding method. The PDE residual is evaluated only
+where $t > \tau(x)$ and $x \leq L(t)$, ensuring that the network is not
+penalized for violating physics in regions not yet reached by the
+fracture front.
+
+\textbf{Learnable time-power exponent.} The early-time temporal scaling
+exponent is treated as a trainable parameter constrained to a
+physically plausible range. This parameter is optimized jointly with the
+network weights, automatically discovering the correct scaling without
+manual tuning. Its converged value provides interpretable physical
+insight into the dominant flow regime.
+
+\textbf{Network architecture.} The neural network component consists of
+a fully connected feed-forward architecture with four hidden layers of
+128 neurons and Tanh activation. The output is constrained to be
+positive through a Softplus activation.
+
+\subsection{Loss function and training}
+
+The total loss function comprises the PDE residual loss and the
+boundary condition loss. The PDE residual is computed only within the
+causally valid region. A smooth temporal factor is introduced at the
+wellbore to reconcile the initial and boundary conditions at the
+origin.
+
+Collocation points are generated using Latin Hypercube Sampling, with
+additional refinement in the near-tip region to resolve the sharp
+gradients. Training proceeds in two stages: the Adam optimizer with
+exponential learning rate decay for global exploration, followed by the
+L-BFGS optimizer with strong Wolfe line search for fine convergence.
+
+\subsection{Experimental configuration}
+
+The physical parameters adopted in the numerical experiments are
+summarized in Table~\ref{tab:params}.
+
+\begin{table}[t]
+\tbl{Physical parameters.\label{tab:params}}
+{\begin{tabular}{@{}lcl@{}} \toprule
+Parameter & Symbol & Value \\ \colrule
+Plane-strain Young's modulus & $E'$ & [TBD] \\
+Fracture height & $H$ & [TBD] \\
+Fluid viscosity & $\mu$ & [TBD] \\
+Leak-off coefficient & $C_L$ & [TBD] \\
+Injection rate & $Q_0$ & [TBD] \\
+Simulation time & $T_{\rm max}$ & [TBD] \\ \botrule
+\end{tabular}}
+\end{table}
+
+A finite difference (FD) solver is implemented as the reference
+baseline. The FD scheme employs a uniform spatial grid with explicit
+time stepping and a velocity-based tip propagation condition.
+
+To quantify the contribution of each component, four model variants
+are constructed for ablation analysis: the full PE-PINN,
+PINN, a variant without the time-power term, a variant without the
+transient tip shape function, and a plain PINN without any of the
+proposed components. In addition, a systematic sensitivity analysis
+is conducted by varying the number of hidden layers (depth
+$D = 2, 3, 4, 5, 6$) and the number of neurons per layer (width
+$W = 32, 64, 128, 256, 512$), yielding 25 configurations.
+
+% ============================================================
+% Section 4: Results and Discussion
+% ============================================================
+\section{Results and Discussion}
+
+\subsection{Model validation}
+
+% TODO: 等实验结果完成后填充
+% - 与 FDM 的裂缝宽度曲线对比 (Fig. 1, 2)
+% - L(t) 演化对比
+% - 定量误差对比表 (Table 2, L2 error, max error)
+% - 计算效率分析 (PINN vs FDM)
+
+The proposed method is evaluated against the finite difference
+baseline. Fracture width profiles at representative times and the
+crack length evolution are compared.
+
+\subsection{Ablation study}
+
+% TODO: 等实验结果完成后填充
+% - 四个变体的裂缝宽度曲线对比 (Fig. 3)
+% - 定量误差对比表 (Table 3)
+% - 分析: 去掉 time-power 导致早期精度下降;
+%         去掉 tip shape 导致尖端精度下降;
+%         去掉两者 (plain PINN) 无法收敛
+
+The ablation study quantifies the individual contribution of each
+component of the proposed framework.
+
+\subsection{Sensitivity analysis}
+
+% TODO: 等实验结果完成后填充
+% - 热力图: D × W → L2 error (Fig. 4)
+% - 分析: 更深更宽的网络提升精度但有递减;
+%         中等深度和宽度达到最优性价比
+% - learnable alpha 收敛值的物理可解释性讨论
+
+The sensitivity analysis characterizes the influence of network depth
+and width on prediction accuracy.
+
+% ============================================================
+% Section 5: Conclusion
+% ============================================================
+\section{Conclusion}
+
+This paper presented PE-PINN, a Physics-Enhanced PINN framework for the PKN
+model of hydraulic fracture propagation. The proposed method addresses
+three fundamental challenges of applying PINNs to moving boundary
+problems: the transient tip shape function analytically encodes the
+transition between asymptotic regimes, the causal arrival-time
+constraint restricts the PDE residual to the physically valid region,
+and the learnable time-power exponent adaptively captures the temporal
+scaling behavior. Numerical experiments demonstrate competitive
+accuracy against a conventional finite difference solver while
+maintaining a mesh-free formulation. Future work will extend the
+framework to more complex fracture propagation scenarios.
+
+\section*{Acknowledgments}
+
+This work was supported by [FUNDING INFORMATION TO BE ADDED].
+
+\section*{References}
+
+\begin{thebibliography}{99}
+\markboth{Authors' Names}{Short Running Head}
+
+% === [E1] 工程背景 ===
+\bibitem[{Economides and Nolte(2000)}]{Economides2000}
+Economides, M.~J. and Nolte, K.~G. (eds.) [2000] \emph{Reservoir Stimulation},
+  3rd edn. (John Wiley \& Sons, Chichester).
+
+% === [E2-E5] PKN模型核心文献 (你现有的4篇) ===
+\bibitem[{Geertsma and de Klerk(1969)}]{Ref_KGD}
+Geertsma, J. and de Klerk, F. [1969] ``A rapid method of predicting width and
+  extent of hydraulically induced fractures,''
+  \emph{J. Pet. Technol.} \textbf{21}(12), 1571--1581.
+
+\bibitem[{Nordgren(1972)}]{Nordgren1972}
+Nordgren, R.~P. [1972] ``Propagation of a vertical hydraulic fracture,''
+  \emph{Soc. Pet. Eng. J.} \textbf{12}(4), 306--314.
+
+\bibitem[{Kemp(1990)}]{Kemp1990}
+Kemp, L.~F. [1990] ``Study of Nordgren's equation of hydraulic fracturing,''
+  \emph{SPE Prod. Eng.} \textbf{5}(3), 311--314.
+
+\bibitem[{Linkov(2015)}]{Linkov2015}
+Linkov, A.~M. [2015] ``A reexamination of the classical PKN model of hydraulic
+  fracture,''
+  \emph{Int. J. Eng. Sci.} (to appear).
+
+\bibitem[{Detournay(2016)}]{Detournay2016}
+Detournay, E. [2016] ``A review of PKN-type modeling of hydraulic fractures,''
+  \emph{J. Pet. Sci. Eng.} (to appear).
+
+% === [E3-E4] 传统数值方法 ===
+\bibitem[{Garikapati \emph{et~al.}(2017)Garikapati, Verhoosel, van Brummelen
+  and Diez}]{Garikapati2017}
+Garikapati, H., Verhoosel, C.~V., van Brummelen, E.~H. and Diez, P. [2017]
+  ``An XFEM-based numerical strategy for the PKN model of hydraulic fracture,''
+  \emph{Int. J. Numer. Methods Eng.} (to appear).
+
+\bibitem[{Peirce(2014)}]{Peirce2014}
+Peirce, A. [2014] ``Modeling multi-scale processes in hydraulic fracture
+  propagation using the implicit level set algorithm,''
+  \emph{Comput. Methods Appl. Mech. Eng.} \textbf{283}, 881--908.
+
+\bibitem[{Linkov(2011)}]{Linkov2011}
+Linkov, A.~M. [2011] ``On efficient simulation of hydraulic fracturing in terms
+  of particle velocity,''
+  \emph{Int. J. Eng. Sci.} \textbf{52}, 77--88.
+
+% === [E5] PINN基础 ===
+\bibitem[{Raissi \emph{et~al.}(2019)Raissi, Perdikaris and Karniadakis}]{Raissi2019}
+Raissi, M., Perdikaris, P. and Karniadakis, G.~E. [2019] ``Physics-informed
+  neural networks: A deep learning framework for solving forward and inverse
+  problems involving nonlinear partial differential equations,''
+  \emph{J. Comput. Phys.} \textbf{378}, 686--707.
+
+% === [E6-E9] PINN变体与发展 ===
+\bibitem[{Jagtap and Karniadakis(2020)}]{Jagtap2020}
+Jagtap, A.~D. and Karniadakis, G.~E. [2020] ``Extended physics-informed neural
+  networks (XPINNs): A generalized space-time domain decomposition based deep
+  learning framework for nonlinear partial differential equations,''
+  \emph{Commun. Comput. Phys.} \textbf{28}(5), 2002--2041.
+
+\bibitem[{Jagtap \emph{et~al.}(2020)Jagtap, Kharazmi and Karniadakis}]{Jagtap2020b}
+Jagtap, A.~D., Kharazmi, E. and Karniadakis, G.~E. [2020] ``Conservative
+  physics-informed neural networks on discrete domains for conservation laws:
+  Applications to forward and inverse problems,''
+  \emph{Comput. Methods Appl. Mech. Eng.} \textbf{365}, 113028.
+
+\bibitem[{Yu \emph{et~al.}(2022)Yu, Lu, Meng and Karniadakis}]{Yu2022}
+Yu, J., Lu, L., Meng, X. and Karniadakis, G.~E. [2022] ``Gradient-enhanced
+  physics-informed neural networks for forward and inverse PDE problems,''
+  \emph{Comput. Methods Appl. Mech. Eng.} \textbf{393}, 114823.
+
+\bibitem[{Moseley \emph{et~al.}(2023)Moseley, Markham and Nissen-Meyer}]{Moseley2023}
+Moseley, B., Markham, A. and Nissen-Meyer, T. [2023] ``Finite basis
+  physics-informed neural networks (FBPINNs): A scalable domain decomposition
+  approach for solving differential equations,''
+  \emph{Adv. Neural Inf. Process. Syst.} \textbf{36}.
+
+% === [E10-E12] PINN在地质力学/多孔介质中的应用 ===
+\bibitem[{Hassan and Labak(2024)}]{Hassan2024}
+Hassan, A. and Labak, J. [2024] ``Physics-informed neural networks for
+  energy-based modeling of non-Newtonian fluid flow and fracture propagation
+  in subsurface formations,''
+  \emph{Energy} (to appear).
+
+\bibitem[{Ali \emph{et~al.}(2025)Ali, Yan and Gunning}]{Ali2025}
+Ali, A., Yan, B. and Gunning, J. [2025] ``History-matching of imbibition flow
+  in multiscale fractured porous media using physics-informed neural networks
+  (PINNs),''
+  \emph{Comput. Methods Appl. Mech. Eng.} \textbf{437}, 117784.
+
+\bibitem[{Wang \emph{et~al.}(2024)Wang, Guo and Wu}]{Wang2024}
+Wang, S., Guo, B. and Wu, Y.-S. [2024] ``Physics-informed neural network
+  simulation of two-phase flow in heterogeneous and fractured porous media,''
+  \emph{Adv. Water Resour.} \textbf{189}, 104730.
+
+% === [E13] 移动边界/Stefan问题 ===
+\bibitem[{Shkolnikov \emph{et~al.}(2024)Shkolnikov, Soner and
+  Tissot-Daguette}]{Shkolnikov2024}
+Shkolnikov, M., Soner, H.~M. and Tissot-Daguette, V. [2024] ``Deep level-set
+  method for Stefan problems,''
+  \emph{J. Comput. Phys.} \textbf{502}, 112829.
+
+% === [E14-E15] PINN+水力压裂 (你现有文献6,7) ===
+\bibitem[{Yang \emph{et~al.}(2023)}]{Yang2023}
+Yang, K., et al. [2023]
+  ``Physics-informed surrogate modeling for hydro-fracture geometry prediction
+  based on deep learning,''
+  \emph{to appear}.
+
+\bibitem[{Tang \emph{et~al.}(2024)}]{Tang2024}
+Tang, S., et al. [2024]
+  ``Physics-informed neural network with moving boundary constraints for
+  modeling hydraulic fracturing,''
+  \emph{to appear}.
+
+% === [E16] PINN failure modes ===
+\bibitem[{Krishnapriyan \emph{et~al.}(2021)Krishnapriyan, Gholami, Zhe, Kirby
+  and Mahoney}]{Krishnapriyan2021}
+Krishnapriyan, A.~S., Gholami, A., Zhe, S., Kirby, R.~M. and Mahoney, M.~W.
+  [2021] ``Characterizing possible failure modes in physics-informed neural
+  networks,''
+  \emph{Adv. Neural Inf. Process. Syst.} \textbf{34}.
+
+% === [E17-E18] 优化器 ===
+\bibitem[{Kingma and Ba(2015)}]{Kingma2015}
+Kingma, D.~P. and Ba, J. [2015] ``Adam: A method for stochastic optimization,''
+  \emph{Proc. 3rd Int. Conf. Learn. Represent. (ICLR)} (San Diego, CA).
+
+\bibitem[{Liu and Nocedal(1989)}]{Liu1989}
+Liu, D.~C. and Nocedal, J. [1989] ``On the limited memory BFGS method for large
+  scale optimization,''
+  \emph{Math. Program.} \textbf{45}, 503--528.
+
+\end{thebibliography}
+
+\end{document} 

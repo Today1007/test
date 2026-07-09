@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "research-paper-writing": {
+      "source": "master-cai/research-paper-writing-skills",
+      "sourceType": "github",
+      "skillPath": "research-paper-writing/SKILL.md",
+      "computedHash": "5aae602b553f08a143efe47dc1a8bc679a92ed2d1bb6cc96277b70efb8cce72e"
+    },
+    "scientific-figure-making": {
+      "source": "chenliu-1996/figures4papers",
+      "sourceType": "github",
+      "skillPath": "scientific-figure-making/SKILL.md",
+      "computedHash": "3e350c4d70c20f91e91c909418e2b92f3d1656c294eff981d2efaad19dbef8cb"
+    }
+  }
+}

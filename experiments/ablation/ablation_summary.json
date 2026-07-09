@@ -1,0 +1,38 @@
+{
+  "Full_Model": {
+    "ablation": null,
+    "final_adam": 0.01423841342329979,
+    "final_lbfgs": 0.005097358487546444,
+    "best_loss": 0.005097358487546444,
+    "time_power": 0.24562960863113403,
+    "n_params": 50050,
+    "time_seconds": 541.7123799324036
+  },
+  "No_Time_Power": {
+    "ablation": "no_time_power",
+    "final_adam": 3.8490724563598633,
+    "final_lbfgs": 3.8490724563598633,
+    "best_loss": 3.8490724563598633,
+    "time_power": 0.20000000298023224,
+    "n_params": 50050,
+    "time_seconds": 107.6609377861023
+  },
+  "No_Tip_Shape": {
+    "ablation": "no_tip_shape",
+    "final_adam": 3.8490724563598633,
+    "final_lbfgs": 3.8490724563598633,
+    "best_loss": 3.8490724563598633,
+    "time_power": 0.22291889786720276,
+    "n_params": 50050,
+    "time_seconds": 92.06597018241882
+  },
+  "Plain_MLP": {
+    "ablation": "plain",
+    "final_adam": 0.49910151958465576,
+    "final_lbfgs": 0.020922882482409477,
+    "best_loss": 0.020922882482409477,
+    "time_power": 0.20000000298023224,
+    "n_params": 50050,
+    "time_seconds": 288.681533575058
+  }
+}
