@@ -1,0 +1,183 @@
+\begin{thebibliography}{22}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\href}[2]{#2}
+\providecommand{\path}[1]{#1}
+\providecommand{\DOIprefix}{doi:}
+\providecommand{\ArXivprefix}{arXiv:}
+\providecommand{\URLprefix}{URL: }
+\providecommand{\Pubmedprefix}{pmid:}
+\providecommand{\doi}[1]{\href{http://dx.doi.org/#1}{\path{#1}}}
+\providecommand{\Pubmed}[1]{\href{pmid:#1}{\path{#1}}}
+\providecommand{\bibinfo}[2]{#2}
+\ifx\xfnm\relax \def\xfnm[#1]{\unskip,\space#1}\fi
+%Type = Article
+\bibitem[{Ali et~al.(2025)Ali, Yan and Gunning}]{Ali2025}
+\bibinfo{author}{Ali, A.}, \bibinfo{author}{Yan, B.}, \bibinfo{author}{Gunning,
+  J.}, \bibinfo{year}{2025}.
+\newblock \bibinfo{title}{History-matching of imbibition flow in multiscale
+  fractured porous media using physics-informed neural networks ({PINNs})}.
+\newblock \bibinfo{journal}{Comput. Methods Appl. Mech. Eng.}
+  \bibinfo{volume}{437}, \bibinfo{pages}{117784}.
+%Type = Article
+\bibitem[{Detournay(2016)}]{Detournay2016}
+\bibinfo{author}{Detournay, E.}, \bibinfo{year}{2016}.
+\newblock \bibinfo{title}{A review of {PKN}-type modeling of hydraulic
+  fractures}.
+\newblock \bibinfo{journal}{J. Pet. Sci. Eng.} \bibinfo{note}{To appear}.
+%Type = Book
+\bibitem[{Economides and Nolte(2000)}]{Economides2000}
+\bibinfo{editor}{Economides, M.J.}, \bibinfo{editor}{Nolte, K.G.} (Eds.),
+  \bibinfo{year}{2000}.
+\newblock \bibinfo{title}{Reservoir Stimulation}.
+\newblock \bibinfo{edition}{3rd} ed., \bibinfo{publisher}{John Wiley \& Sons},
+  \bibinfo{address}{Chichester}.
+%Type = Article
+\bibitem[{Garikapati et~al.(2017)Garikapati, Verhoosel, van Brummelen and
+  Diez}]{Garikapati2017}
+\bibinfo{author}{Garikapati, H.}, \bibinfo{author}{Verhoosel, C.V.},
+  \bibinfo{author}{van Brummelen, E.H.}, \bibinfo{author}{Diez, P.},
+  \bibinfo{year}{2017}.
+\newblock \bibinfo{title}{An {XFEM}-based numerical strategy for the {PKN}
+  model of hydraulic fracture}.
+\newblock \bibinfo{journal}{Int. J. Numer. Methods Eng.} \bibinfo{note}{To
+  appear}.
+%Type = Article
+\bibitem[{Geertsma and de~Klerk(1969)}]{Ref_KGD}
+\bibinfo{author}{Geertsma, J.}, \bibinfo{author}{de~Klerk, F.},
+  \bibinfo{year}{1969}.
+\newblock \bibinfo{title}{A rapid method of predicting width and extent of
+  hydraulically induced fractures}.
+\newblock \bibinfo{journal}{J. Pet. Technol.} \bibinfo{volume}{21},
+  \bibinfo{pages}{1571--1581}.
+%Type = Article
+\bibitem[{Hassan and Labak(2024)}]{Hassan2024}
+\bibinfo{author}{Hassan, A.}, \bibinfo{author}{Labak, J.},
+  \bibinfo{year}{2024}.
+\newblock \bibinfo{title}{Physics-informed neural networks for energy-based
+  modeling of non-{Newtonian} fluid flow and fracture propagation in subsurface
+  formations}.
+\newblock \bibinfo{journal}{Energy} \bibinfo{note}{To appear}.
+%Type = Article
+\bibitem[{Jagtap and Karniadakis(2020)}]{Jagtap2020}
+\bibinfo{author}{Jagtap, A.D.}, \bibinfo{author}{Karniadakis, G.E.},
+  \bibinfo{year}{2020}.
+\newblock \bibinfo{title}{Extended physics-informed neural networks ({XPINNs}):
+  A generalized space-time domain decomposition based deep learning framework
+  for nonlinear partial differential equations}.
+\newblock \bibinfo{journal}{Commun. Comput. Phys.} \bibinfo{volume}{28},
+  \bibinfo{pages}{2002--2041}.
+%Type = Article
+\bibitem[{Jagtap et~al.(2020)Jagtap, Kharazmi and Karniadakis}]{Jagtap2020b}
+\bibinfo{author}{Jagtap, A.D.}, \bibinfo{author}{Kharazmi, E.},
+  \bibinfo{author}{Karniadakis, G.E.}, \bibinfo{year}{2020}.
+\newblock \bibinfo{title}{Conservative physics-informed neural networks on
+  discrete domains for conservation laws: Applications to forward and inverse
+  problems}.
+\newblock \bibinfo{journal}{Comput. Methods Appl. Mech. Eng.}
+  \bibinfo{volume}{365}, \bibinfo{pages}{113028}.
+%Type = Article
+\bibitem[{Kemp(1990)}]{Kemp1990}
+\bibinfo{author}{Kemp, L.F.}, \bibinfo{year}{1990}.
+\newblock \bibinfo{title}{Study of {Nordgren}'s equation of hydraulic
+  fracturing}.
+\newblock \bibinfo{journal}{SPE Prod. Eng.} \bibinfo{volume}{5},
+  \bibinfo{pages}{311--314}.
+%Type = Inproceedings
+\bibitem[{Kingma and Ba(2015)}]{Kingma2015}
+\bibinfo{author}{Kingma, D.P.}, \bibinfo{author}{Ba, J.}, \bibinfo{year}{2015}.
+\newblock \bibinfo{title}{{Adam}: A method for stochastic optimization}, in:
+  \bibinfo{booktitle}{Proc. 3rd Int. Conf. Learn. Represent. (ICLR)},
+  \bibinfo{address}{San Diego, CA}.
+%Type = Article
+\bibitem[{Krishnapriyan et~al.(2021)Krishnapriyan, Gholami, Zhe, Kirby and
+  Mahoney}]{Krishnapriyan2021}
+\bibinfo{author}{Krishnapriyan, A.S.}, \bibinfo{author}{Gholami, A.},
+  \bibinfo{author}{Zhe, S.}, \bibinfo{author}{Kirby, R.M.},
+  \bibinfo{author}{Mahoney, M.W.}, \bibinfo{year}{2021}.
+\newblock \bibinfo{title}{Characterizing possible failure modes in
+  physics-informed neural networks}.
+\newblock \bibinfo{journal}{Adv. Neural Inf. Process. Syst.}
+  \bibinfo{volume}{34}.
+%Type = Article
+\bibitem[{Linkov(2011)}]{Linkov2011}
+\bibinfo{author}{Linkov, A.M.}, \bibinfo{year}{2011}.
+\newblock \bibinfo{title}{On efficient simulation of hydraulic fracturing in
+  terms of particle velocity}.
+\newblock \bibinfo{journal}{Int. J. Eng. Sci.} \bibinfo{volume}{52},
+  \bibinfo{pages}{77--88}.
+%Type = Article
+\bibitem[{Linkov(2015)}]{Linkov2015}
+\bibinfo{author}{Linkov, A.M.}, \bibinfo{year}{2015}.
+\newblock \bibinfo{title}{A reexamination of the classical {PKN} model of
+  hydraulic fracture}.
+\newblock \bibinfo{journal}{Int. J. Eng. Sci.} \bibinfo{note}{To appear}.
+%Type = Article
+\bibitem[{Liu and Nocedal(1989)}]{Liu1989}
+\bibinfo{author}{Liu, D.C.}, \bibinfo{author}{Nocedal, J.},
+  \bibinfo{year}{1989}.
+\newblock \bibinfo{title}{On the limited memory {BFGS} method for large scale
+  optimization}.
+\newblock \bibinfo{journal}{Math. Program.} \bibinfo{volume}{45},
+  \bibinfo{pages}{503--528}.
+%Type = Article
+\bibitem[{Moseley et~al.(2023)Moseley, Markham and Nissen-Meyer}]{Moseley2023}
+\bibinfo{author}{Moseley, B.}, \bibinfo{author}{Markham, A.},
+  \bibinfo{author}{Nissen-Meyer, T.}, \bibinfo{year}{2023}.
+\newblock \bibinfo{title}{Finite basis physics-informed neural networks
+  ({FBPINNs}): A scalable domain decomposition approach for solving
+  differential equations}.
+\newblock \bibinfo{journal}{Adv. Neural Inf. Process. Syst.}
+  \bibinfo{volume}{36}.
+%Type = Article
+\bibitem[{Nordgren(1972)}]{Nordgren1972}
+\bibinfo{author}{Nordgren, R.P.}, \bibinfo{year}{1972}.
+\newblock \bibinfo{title}{Propagation of a vertical hydraulic fracture}.
+\newblock \bibinfo{journal}{Soc. Pet. Eng. J.} \bibinfo{volume}{12},
+  \bibinfo{pages}{306--314}.
+%Type = Article
+\bibitem[{Peirce(2014)}]{Peirce2014}
+\bibinfo{author}{Peirce, A.}, \bibinfo{year}{2014}.
+\newblock \bibinfo{title}{Modeling multi-scale processes in hydraulic fracture
+  propagation using the implicit level set algorithm}.
+\newblock \bibinfo{journal}{Comput. Methods Appl. Mech. Eng.}
+  \bibinfo{volume}{283}, \bibinfo{pages}{881--908}.
+%Type = Article
+\bibitem[{Raissi et~al.(2019)Raissi, Perdikaris and Karniadakis}]{Raissi2019}
+\bibinfo{author}{Raissi, M.}, \bibinfo{author}{Perdikaris, P.},
+  \bibinfo{author}{Karniadakis, G.E.}, \bibinfo{year}{2019}.
+\newblock \bibinfo{title}{Physics-informed neural networks: A deep learning
+  framework for solving forward and inverse problems involving nonlinear
+  partial differential equations}.
+\newblock \bibinfo{journal}{J. Comput. Phys.} \bibinfo{volume}{378},
+  \bibinfo{pages}{686--707}.
+%Type = Article
+\bibitem[{Tang et~al.(2024)}]{Tang2024}
+\bibinfo{author}{Tang, S.}, et~al., \bibinfo{year}{2024}.
+\newblock \bibinfo{title}{Physics-informed neural network with moving boundary
+  constraints for modeling hydraulic fracturing}.
+\newblock \bibinfo{journal}{to appear} .
+%Type = Article
+\bibitem[{Wang et~al.(2024)Wang, Guo and Wu}]{Wang2024}
+\bibinfo{author}{Wang, S.}, \bibinfo{author}{Guo, B.}, \bibinfo{author}{Wu,
+  Y.S.}, \bibinfo{year}{2024}.
+\newblock \bibinfo{title}{Physics-informed neural network simulation of
+  two-phase flow in heterogeneous and fractured porous media}.
+\newblock \bibinfo{journal}{Adv. Water Resour.} \bibinfo{volume}{189},
+  \bibinfo{pages}{104730}.
+%Type = Article
+\bibitem[{Yang et~al.(2023)}]{Yang2023}
+\bibinfo{author}{Yang, K.}, et~al., \bibinfo{year}{2023}.
+\newblock \bibinfo{title}{Physics-informed surrogate modeling for
+  hydro-fracture geometry prediction based on deep learning}.
+\newblock \bibinfo{journal}{to appear} .
+%Type = Article
+\bibitem[{Yu et~al.(2022)Yu, Lu, Meng and Karniadakis}]{Yu2022}
+\bibinfo{author}{Yu, J.}, \bibinfo{author}{Lu, L.}, \bibinfo{author}{Meng, X.},
+  \bibinfo{author}{Karniadakis, G.E.}, \bibinfo{year}{2022}.
+\newblock \bibinfo{title}{Gradient-enhanced physics-informed neural networks
+  for forward and inverse {PDE} problems}.
+\newblock \bibinfo{journal}{Comput. Methods Appl. Mech. Eng.}
+  \bibinfo{volume}{393}, \bibinfo{pages}{114823}.
+
+\end{thebibliography}

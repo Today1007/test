@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: ws-ijcm.aux
+Reallocating 'name_of_file' (item size: 1) to 17 items.
+The style file: cas-model2-names.bst
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+Database file #1: ws-ijcm.bib
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Warning--empty pages in Kingma2015
+You've used 22 entries,
+            2990 wiz_defined-function locations,
+            881 strings with 9927 characters,
+and the built_in function-call counts, 13223 in all, are:
+= -- 1018
+> -- 445
+< -- 14
++ -- 180
+- -- 150
+* -- 1370
+:= -- 1947
+add.period$ -- 65
+call.type$ -- 22
+change.case$ -- 164
+chr.to.int$ -- 22
+cite$ -- 23
+duplicate$ -- 1052
+empty$ -- 1021
+format.name$ -- 218
+if$ -- 2459
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 193
+newline$ -- 124
+num.names$ -- 89
+pop$ -- 384
+preamble$ -- 1
+purify$ -- 136
+quote$ -- 0
+skip$ -- 301
+stack$ -- 0
+substring$ -- 536
+swap$ -- 686
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 195
+warning$ -- 1
+while$ -- 86
+width$ -- 0
+write$ -- 319
+(There was 1 warning)

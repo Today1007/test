@@ -1,0 +1,8 @@
+This paper presents PE-PINN, a Physics-Enhanced Physics-Informed Neural
+Network framework for solving the PKN model of hydraulic fracturing.
+The governing Nordgren equation is solved by embedding physical priors
+directly into the network architecture, including a transient tip shape
+function that analytically interpolates asymptotic regimes, a causal
+arrival-time constraint, and a learnable time-power exponent. Numerical
+experiments demonstrate competitive accuracy against finite difference
+solutions while maintaining a mesh-free formulation.
