@@ -1,0 +1,42 @@
+[
+  {
+    "section_key": "introduction",
+    "title": "Introduction",
+    "start_line": 110,
+    "end_line": 245,
+    "line_base": 1,
+    "word_count": 1071,
+    "char_count": 8486,
+    "file_name": "introduction.md"
+  },
+  {
+    "section_key": "method",
+    "title": "Method",
+    "start_line": 408,
+    "end_line": 649,
+    "line_base": 1,
+    "word_count": 1521,
+    "char_count": 11698,
+    "file_name": "method.md"
+  },
+  {
+    "section_key": "result",
+    "title": "Result",
+    "start_line": 650,
+    "end_line": 732,
+    "line_base": 1,
+    "word_count": 520,
+    "char_count": 4016,
+    "file_name": "result.md"
+  },
+  {
+    "section_key": "conclusion",
+    "title": "Conclusion",
+    "start_line": 733,
+    "end_line": 747,
+    "line_base": 1,
+    "word_count": 97,
+    "char_count": 797,
+    "file_name": "conclusion.md"
+  }
+]

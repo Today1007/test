@@ -1,0 +1,143 @@
+{
+  "headline_claims": [
+    "To address these challenges, this paper proposes PE-PINN (Physics-Enhanced PINN), a novel framework for the PKN model that explicitly embeds physical prior knowledge into the network architecture.",
+    "The remainder of this paper is organized as follows."
+  ],
+  "closure_targets": [
+    "## Conclusion sec:conclusion This paper presented PE-PINN, a Physics-Enhanced PINN framework for the PKN model of hydraulic fracture propagation."
+  ],
+  "section_claims": {
+    "introduction": [
+      "To address these challenges, this paper proposes PE-PINN (Physics-Enhanced PINN), a novel framework for the PKN model that explicitly embeds physical prior knowledge into the network architecture.",
+      "The remainder of this paper is organized as follows."
+    ],
+    "method": [
+      "To address these challenges, this paper proposes a physics-enhanced representation that embeds prior physical knowledge directly into the network architecture."
+    ],
+    "conclusion": [
+      "## Conclusion sec:conclusion This paper presented PE-PINN, a Physics-Enhanced PINN framework for the PKN model of hydraulic fracture propagation."
+    ]
+  },
+  "claim_candidates": [
+    {
+      "id": "introduction:1",
+      "section_key": "introduction",
+      "claim": "To address these challenges, this paper proposes PE-PINN (Physics-Enhanced PINN), a novel framework for the PKN model that explicitly embeds physical prior knowledge into the network architecture.",
+      "evidence_anchor": [],
+      "claim_strength": "unsupported",
+      "missing_evidence": [
+        "add a citation, figure/table, metric, or section anchor before using strong wording"
+      ],
+      "allowed_wording": "To address these challenges, this paper proposes PE-PINN (Physics-Enhanced PINN), a novel framework for the PKN model that explicitly embeds physical prior knowledge into the network architecture.",
+      "forbidden_wording": [
+        "unbounded superiority, novelty, or significance wording"
+      ]
+    },
+    {
+      "id": "introduction:2",
+      "section_key": "introduction",
+      "claim": "The remainder of this paper is organized as follows.",
+      "evidence_anchor": [],
+      "claim_strength": "unsupported",
+      "missing_evidence": [
+        "add an evidence anchor or soften the claim boundary"
+      ],
+      "allowed_wording": "The remainder of this paper is organized as follows.",
+      "forbidden_wording": [
+        "unqualified conclusion without visible evidence"
+      ]
+    },
+    {
+      "id": "method:1",
+      "section_key": "method",
+      "claim": "To address these challenges, this paper proposes a physics-enhanced representation that embeds prior physical knowledge directly into the network architecture.",
+      "evidence_anchor": [],
+      "claim_strength": "unsupported",
+      "missing_evidence": [
+        "add an evidence anchor or soften the claim boundary"
+      ],
+      "allowed_wording": "To address these challenges, this paper proposes a physics-enhanced representation that embeds prior physical knowledge directly into the network architecture.",
+      "forbidden_wording": [
+        "unqualified conclusion without visible evidence"
+      ]
+    },
+    {
+      "id": "conclusion:1",
+      "section_key": "conclusion",
+      "claim": "## Conclusion sec:conclusion This paper presented PE-PINN, a Physics-Enhanced PINN framework for the PKN model of hydraulic fracture propagation.",
+      "evidence_anchor": [],
+      "claim_strength": "unsupported",
+      "missing_evidence": [
+        "add an evidence anchor or soften the claim boundary"
+      ],
+      "allowed_wording": "## Conclusion sec:conclusion This paper presented PE-PINN, a Physics-Enhanced PINN framework for the PKN model of hydraulic fracture propagation.",
+      "forbidden_wording": [
+        "unqualified conclusion without visible evidence"
+      ]
+    }
+  ],
+  "section_claim_candidates": {
+    "introduction": [
+      {
+        "id": "introduction:1",
+        "section_key": "introduction",
+        "claim": "To address these challenges, this paper proposes PE-PINN (Physics-Enhanced PINN), a novel framework for the PKN model that explicitly embeds physical prior knowledge into the network architecture.",
+        "evidence_anchor": [],
+        "claim_strength": "unsupported",
+        "missing_evidence": [
+          "add a citation, figure/table, metric, or section anchor before using strong wording"
+        ],
+        "allowed_wording": "To address these challenges, this paper proposes PE-PINN (Physics-Enhanced PINN), a novel framework for the PKN model that explicitly embeds physical prior knowledge into the network architecture.",
+        "forbidden_wording": [
+          "unbounded superiority, novelty, or significance wording"
+        ]
+      },
+      {
+        "id": "introduction:2",
+        "section_key": "introduction",
+        "claim": "The remainder of this paper is organized as follows.",
+        "evidence_anchor": [],
+        "claim_strength": "unsupported",
+        "missing_evidence": [
+          "add an evidence anchor or soften the claim boundary"
+        ],
+        "allowed_wording": "The remainder of this paper is organized as follows.",
+        "forbidden_wording": [
+          "unqualified conclusion without visible evidence"
+        ]
+      }
+    ],
+    "method": [
+      {
+        "id": "method:1",
+        "section_key": "method",
+        "claim": "To address these challenges, this paper proposes a physics-enhanced representation that embeds prior physical knowledge directly into the network architecture.",
+        "evidence_anchor": [],
+        "claim_strength": "unsupported",
+        "missing_evidence": [
+          "add an evidence anchor or soften the claim boundary"
+        ],
+        "allowed_wording": "To address these challenges, this paper proposes a physics-enhanced representation that embeds prior physical knowledge directly into the network architecture.",
+        "forbidden_wording": [
+          "unqualified conclusion without visible evidence"
+        ]
+      }
+    ],
+    "conclusion": [
+      {
+        "id": "conclusion:1",
+        "section_key": "conclusion",
+        "claim": "## Conclusion sec:conclusion This paper presented PE-PINN, a Physics-Enhanced PINN framework for the PKN model of hydraulic fracture propagation.",
+        "evidence_anchor": [],
+        "claim_strength": "unsupported",
+        "missing_evidence": [
+          "add an evidence anchor or soften the claim boundary"
+        ],
+        "allowed_wording": "## Conclusion sec:conclusion This paper presented PE-PINN, a Physics-Enhanced PINN framework for the PKN model of hydraulic fracture propagation.",
+        "forbidden_wording": [
+          "unqualified conclusion without visible evidence"
+        ]
+      }
+    ]
+  }
+}

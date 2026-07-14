@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "academic-search": {
+      "source": "claude-office-skills/skills",
+      "sourceType": "github",
+      "skillPath": "academic-search/SKILL.md",
+      "computedHash": "9fff78ca98bd5bd7ed08bd5e38d8552bfdad5c9d9ce0f0b2531c5e54d691a58f"
+    },
     "research-paper-writing": {
       "source": "master-cai/research-paper-writing-skills",
       "sourceType": "github",

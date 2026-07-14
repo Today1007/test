@@ -1,0 +1,19 @@
+[
+  {
+    "title": "Cross-section numeric consistency should be reconciled",
+    "quote": "Section~2 formulates the PKN governing equations.",
+    "explanation": "Multiple sections contain numeric claims. Confirm that the same quantities reconcile across main text, tables, and appendix material.",
+    "comment_type": "presentation",
+    "severity": "moderate",
+    "confidence": "medium",
+    "source_kind": "llm",
+    "source_section": "introduction",
+    "related_sections": [
+      "introduction",
+      "method",
+      "result"
+    ],
+    "review_lane": "notation_and_numeric_consistency",
+    "gate_blocker": false
+  }
+]
